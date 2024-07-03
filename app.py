@@ -6,7 +6,7 @@ import requests
 st.set_page_config(page_icon='🍃', page_title='Text Generation Labeling Tool', layout='wide', initial_sidebar_state="collapsed")
 st.markdown("<h1 style='text-align: center;'>Text Generation Labeling Tool</h1>", unsafe_allow_html=True)
 
-def file_selector(folder_path=r'./Datasets'):
+def file_selector(folder_path=r'./DemoDatasets'):
     filenames = os.listdir(folder_path)
     return filenames, folder_path
 
@@ -110,7 +110,7 @@ if len(df) != 0:
         df['distract'][st.session_state.idx] = txt_distractors
         df['question_type'][st.session_state.idx] = revert_question_type_id(txt_question_type)
 
-        df.to_csv(f'./Datasets/{filename_input}', index=None)
+        df.to_csv(f'./DemoDatasets/{filename_input}', index=None)
 
     if btn_goto:
         st.session_state.idx = txt_goto - 1
