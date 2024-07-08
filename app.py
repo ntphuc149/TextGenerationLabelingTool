@@ -6,7 +6,7 @@ import requests
 st.set_page_config(page_icon='🍃', page_title='Text Generation Labeling Tool by n.t.phuc149 🌒', layout='wide', initial_sidebar_state="collapsed")
 st.markdown("<h1 style='text-align: center;'>Text Generation Labeling Tool by n.t.phuc149 🌒</h1>", unsafe_allow_html=True)
 
-def file_selector(folder_path=r'./Datasets'):
+def file_selector(folder_path=r'./DemoDatasets'):
     filenames = os.listdir(folder_path)
     return filenames, folder_path
 
@@ -153,7 +153,7 @@ if len(df) != 0:
         df['d_understanding'][st.session_state.idx] = d_understanding
         df['d_difficulty'][st.session_state.idx] = d_difficulty
 
-        df.to_csv(f'./Datasets/{filename_input}', index=None, encoding='utf-8-sig')
+        df.to_csv(f'./DemoDatasets/{filename_input}', index=None, encoding='utf-8-sig')
         st.rerun()
 
     if btn_goto:
