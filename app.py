@@ -4,9 +4,9 @@ import os
 import requests
 
 st.set_page_config(page_icon='🍃', page_title='Text Generation Labeling Tool by n.t.phuc149 🌒', layout='wide', initial_sidebar_state="collapsed")
-st.markdown("<h1 style='text-align: center;'>Text Generation Labeling Tool by n.t.phuc149 🌒</h1>", unsafe_allow_html=True)
+st.markdown("<h1 style='text-align: center;'>Text Generation Labeling Tool</h1>", unsafe_allow_html=True)
 
-def file_selector(folder_path=r'./DemoDatasets'):
+def file_selector(folder_path=r'./DataSpliting'):
     filenames = os.listdir(folder_path)
     return filenames, folder_path
 
@@ -122,7 +122,7 @@ if len(df) != 0:
 
     st.markdown(f"<p style='text-align: left; font-weight: normal; font-size: 14px'>Your distractors:</p>", unsafe_allow_html=True)
 
-    col_21, col_22 = st.columns(spec=[9, 1])
+    col_21, col_22 = st.columns(spec=[9.3, 0.7])
     txt_distractors = col_21.text_area(height=90, label='Your distractors:', label_visibility='collapsed', value=df['distract'][st.session_state.idx])  
     btn_generate_distractor = col_22.button(label='Generate distractors', use_container_width=True)
 
@@ -157,13 +157,13 @@ if len(df) != 0:
     d_difficulty = col_eval_5.selectbox(label='[D] Difficulty:', options=options, index=options.index(d_difficulty_value))
 
     if btn_generate_distractor:
-        if filename_input == 'BiologyQA_demo.csv':
+        if filename_input == 'BiologyQA_Phuc.csv':
             expert = 'biologist'
-        elif filename_input == 'GeographyQA_demo.csv':
+        elif filename_input == 'GeographyQA_Phuc.csv':
             expert = 'geographer'
-        elif filename_input == 'HistoryQA_demo.csv':
+        elif filename_input == 'HistoryQA_Phuc.csv':
             expert = 'historian'
-        elif filename_input == 'CivicEduQA_demo.csv':
+        elif filename_input == 'CivicEduQA_Phuc.csv':
             expert = 'civic educator'
         url = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent'
         headers = {'Content-Type': 'application/json'}
@@ -183,7 +183,8 @@ if len(df) != 0:
         response = requests.post(url, headers=headers, json=data, params=params)
         if response.status_code == 200:
             correct = response.json()['candidates'][0]['content']['parts'][0]['text']
-            st.success(f'3 distraction answers: {correct}')
+            st.write('3 Distraction answers:')
+            st.code(body=correct, language='wiki')
             st.cache_data.clear()
         else:
             st.error('Failed to generate distractors. Please check API and inputs.')
@@ -223,7 +224,7 @@ if len(df) != 0:
         df['d_understanding'][st.session_state.idx] = d_understanding
         df['d_difficulty'][st.session_state.idx] = d_difficulty
 
-        df.to_csv(f'./DemoDatasets/{filename_input}', index=None, encoding='utf-8-sig')
+        df.to_csv(f'./DataSpliting/{filename_input}', index=None, encoding='utf-8-sig')
         st.rerun()
 
     if btn_goto:
