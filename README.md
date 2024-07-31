@@ -5,11 +5,13 @@ Theme customization:
 - Create a folder name: .streamlit
 - Create file name 'config.toml' inside folder '.streamlit'
 - Paste this content into 'config.toml':
+  '''
 [theme]
 primaryColor="#8e2929"
 backgroundColor="#1f1f1f"
 secondaryBackgroundColor="#464646"
 textColor="#ce9178"
 font="serif"
+'''
 
 
